@@ -61,3 +61,21 @@ export async function fetchNoteById(noteId: string): Promise<Note> {
   const response = await axios.get<Note>(`${url}/${noteId}`, optionsNoteById);
   return response.data;
 }
+
+export async function fetchNotesByTag(
+  tag: string | undefined,
+): Promise<NotesParam> {
+  const optionsNotesByTag = {
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
+    },
+    params: {
+      tag: tag,
+      page: 1,
+      perPage: 12,
+    },
+  };
+  const response = await axios.get<NotesParam>(`${url}`, optionsNotesByTag);
+  return response.data;
+}

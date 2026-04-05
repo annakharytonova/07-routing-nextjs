@@ -49,7 +49,7 @@ function NotesPageClient() {
         </header>
         {isSuccess && data.notes.length > 0 && <NoteList notes={data.notes} />}
         {isModalOpen && (
-          <Modal onClose={() => setIsModalOpen(false)}>
+          <Modal>
             <NoteForm onClose={() => setIsModalOpen(false)} />
           </Modal>
         )}
