@@ -13,6 +13,7 @@ const url = "https://notehub-public.goit.study/api/notes";
 export async function fetchNotes(
   query: string,
   page: number,
+  tag?: string,
 ): Promise<NotesParam> {
   const optionsNote = {
     headers: {
@@ -23,6 +24,7 @@ export async function fetchNotes(
       search: query,
       page,
       perPage: 12,
+      tag,
     },
   };
   const response = await axios.get<NotesParam>(url, optionsNote);
@@ -59,23 +61,5 @@ export async function fetchNoteById(noteId: string): Promise<Note> {
     },
   };
   const response = await axios.get<Note>(`${url}/${noteId}`, optionsNoteById);
-  return response.data;
-}
-
-export async function fetchNotesByTag(
-  tag: string | undefined,
-): Promise<NotesParam> {
-  const optionsNotesByTag = {
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-    },
-    params: {
-      tag: tag,
-      page: 1,
-      perPage: 12,
-    },
-  };
-  const response = await axios.get<NotesParam>(`${url}`, optionsNotesByTag);
   return response.data;
 }
