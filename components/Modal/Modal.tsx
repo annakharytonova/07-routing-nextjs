@@ -7,11 +7,18 @@ import { useRouter } from "next/navigation";
 
 interface ModalParam {
   children: React.ReactNode;
+  onClose?: () => void;
 }
 
-function Modal({ children }: ModalParam) {
+function Modal({ children, onClose }: ModalParam) {
   const router = useRouter();
-  const closeModal = useCallback(() => router.back(), [router]);
+  const closeModal = useCallback(() => {
+    if (onClose) {
+      onClose();
+    } else {
+      router.back();
+    }
+  }, [onClose, router]);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
